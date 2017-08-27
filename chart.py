@@ -22,7 +22,11 @@ class Chart:
 # TODO
 
     def load(self, filename):
-        input_file = open(filename, 'r')
+        try:
+            input_file = open(filename, 'r')
+        except FileNotFoundError:
+            input_file = open(filename, 'w+')
+
         self.top_players = json.load(input_file)
         input_file.close()
 
