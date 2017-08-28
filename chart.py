@@ -27,7 +27,10 @@ class Chart:
         except FileNotFoundError:
             input_file = open(filename, 'w+')
 
-        self.top_players = json.load(input_file)
+        try:
+            self.top_players = json.load(input_file)
+        except JSONDecodeError:
+            self.top_players = {}
         input_file.close()
 
     def add(self, name, score):
