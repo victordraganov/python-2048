@@ -16,11 +16,13 @@ class Chart:
         return any(player for player in self.top_players if player[1] <= score)
 
     def save(self, filename):
-        output_file = open(filename, 'w')
+        try:
+            output_file = open(filename, 'w')
+        except FileNotFoundError:
+            output_file = open(filename, 'w+')
         output_file.truncate()
         json.dump(self.top_players, output_file)
         output_file.close()
-# TODO
 
     def load(self, filename):
         try:

@@ -21,12 +21,12 @@ class Grid(QWidget):
         super().__init__()
         self.game = game
         self.width, self.height = game.grid_dimensions()
-        grid = QGridLayout()
-        self.setLayout(grid)
-        grid.setSpacing(5)
+        qGrid = QGridLayout()
+        self.setLayout(qGrid)
+        qGrid.setSpacing(5)
 
     def draw(self):
-        grid = self.layout()
+        qGrid = self.layout()
         width, height = self.width, self.height
 
         for x in range(height):
@@ -41,39 +41,40 @@ class Grid(QWidget):
                 tile.setFrameShape(QFrame.Box)
                 tile.setStyleSheet("""QLabel { font : 20pt;}""")
                 tile.setLineWidth(3)
-                grid.addWidget(tile, x, y)
+                qGrid.addWidget(tile, x, y)
 
         score_label = QLabel('Score: {}'.format(self.game.score()))
         score_label.setStyleSheet("""QLabel { font : 14pt;}""")
         undo_label = QLabel('Undo: {}'.format(self.game.undos_left()))
         undo_label.setStyleSheet("""QLabel { font : 14pt;}""")
-        grid.addWidget(score_label, height, 0, 1, width)
-        grid.addWidget(undo_label, height + 1, 0, 1, width)
+        qGrid.addWidget(score_label, height, 0, 1, width)
+        qGrid.addWidget(undo_label, height + 1, 0, 1, width)
 
     def keyPressEvent(self, event):
 
+        key = event.key()
         if self.game.get_state() != State.running:
             if self.game.get_state() == State.game_won:
                 self.show_game_won()
             else:
                 self.show_game_over()
             return
-        if event.key() == Qt.Key_A:
+        if key == Qt.Key_Left:
             self.game.slide_to('left')
 
-        if event.key() == Qt.Key_S:
+        if key == Qt.Key_Down:
             self.game.slide_to('down')
 
-        if event.key() == Qt.Key_W:
+        if key == Qt.Key_Up:
             self.game.slide_to('up')
 
-        if event.key() == Qt.Key_D:
+        if key == Qt.Key_Right:
             self.game.slide_to('right')
 
-        if event.key() == Qt.Key_R:
+        if key == Qt.Key_R:
             self.game.reset()
 
-        if event.key() == Qt.Key_Z:
+        if key == Qt.Key_Z:
             self.game.undo()
 
         self.clear_layout(self.layout())

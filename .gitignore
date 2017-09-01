@@ -1,4 +1,3 @@
 .bin
-./__pycache
+./__pycache__
 ./__pycache__/*
-.dat

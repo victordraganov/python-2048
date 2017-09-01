@@ -91,8 +91,6 @@ class Game:
     def add_player_to_chart(self, name, score):
         self.__chart.add(name, score)
 
-# TODO file not found handling
-
     def save_top_scores(self, filename):
         self.__chart.save(filename)
 
