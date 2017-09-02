@@ -2,7 +2,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 import sys
 from game import *
-from input_dialog import InputDialog
 
 class Tile(QLabel):
 
