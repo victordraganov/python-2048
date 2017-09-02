@@ -1,6 +1,6 @@
 from grid import Grid
 from game import Game
-#from tui import TextUserInterface
+from tui import TextUserInterface
 from gui import GraphicUserInterface
 import argparse
 
@@ -30,4 +30,4 @@ def main():
     ui.main_loop()
 
 if __name__ == '__main__':
-    w()
+    main()

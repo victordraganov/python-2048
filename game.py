@@ -12,7 +12,7 @@ class State(Enum):
 
 
 class Difficulty(Enum):
-    EASY = 1,"easy"
+    EASY = 1, "easy"
     NORMAL = 2, "normal"
     HARD = 3, "hard"
     HELL = 4, "hell"
@@ -28,18 +28,19 @@ class Game:
         self.__state = State.game_waiting
         self.__undo_counter = 0
         self.__difficulty = Difficulty.NORMAL
+        self.__slider = {
+            'left': self.__grid.slide_left,
+            'right': self.__grid.slide_right,
+            'up': self.__grid.slide_up,
+            'down': self.__grid.slide_down
+        }
 
     def slide_to(self, direction):
-        if direction not in ['left', 'right', 'up', 'down']:
+        if self.__slider.get(direction) == None:
             return
         try:
             grid_before_slide = self.__grid.copy()
-            points_gained, must_generate = {
-                'left': self.__grid.slide_left,
-                'right': self.__grid.slide_right,
-                'up': self.__grid.slide_up,
-                'down': self.__grid.slide_down
-            }.get(direction)()
+            points_gained, must_generate = self.__slider.get(direction)()
         except GridWinScoreReachedException as e:
             self.__state = State.game_won
             points_gained, must_generate = e.value
