@@ -1,6 +1,6 @@
 from grid import Grid
 from game import Game
-from tui import TextUserInterface
+#from tui import TextUserInterface
 from gui import GraphicUserInterface
 import argparse
 
@@ -8,8 +8,8 @@ import argparse
 def main():
 
     parser = argparse.ArgumentParser(description='The 2048 game.')
-    parser.add_argument(
-        '--tui', action='store_true', help='starts the game in text mode')
+    # parser.add_argument(
+    #     '--tui', action='store_true', help='starts the game in text mode')
 
     parser.add_argument('width', type=int,
                         help='Choose grid width')
@@ -22,12 +22,12 @@ def main():
 
     game = Game(grid)
 
-    if args.tui:
-        ui = TextUserInterface(game)
-    else:
-        ui = GraphicUserInterface(game)
+    # if args.tui:
+    #     ui = TextUserInterface(game)
+    # else:
+    ui = GraphicUserInterface(game)
 
     ui.main_loop()
 
 if __name__ == '__main__':
-    main()
+    w()
