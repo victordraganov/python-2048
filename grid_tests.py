@@ -121,12 +121,12 @@ class GridGenerateNumberTest(unittest.TestCase):
             self.assertEqual(
                 len(self.test_grid._Grid__free_cells),
                 self.total_cells - count)
-            self.test_grid.generate_number()
+            self.test_grid.generate_number(1)
 
     def test_generate_number_on_full_grid(self):
         for count in range(self.total_cells - 1):
-            self.test_grid.generate_number()
-        self.assertRaises(Exception, self.test_grid.generate_number())
+            self.test_grid.generate_number(1)
+        self.assertRaises(Exception, self.test_grid.generate_number(1))
 
 
 class GridSlidePointsTest(unittest.TestCase):

@@ -1,4 +1,5 @@
-from random import random, choice
+from random import random, choice, randint
+import math
 from exceptions import GridWinScoreReachedException
 from copy import deepcopy
 import constants
@@ -13,7 +14,7 @@ class Grid:
 
     def __getitem__(self, position):
         x, y = position
-        if x < self.__width and x >= 0 and y < self.__height and y >= 0:
+        if x < self.__height and x >= 0 and y < self.__width and y >= 0:
             return self.__cells[x][y]
 
     def can_slide(self):
@@ -34,11 +35,13 @@ class Grid:
     def dimensions(self):
         return self.__width, self.__height
 
-    def generate_number(self):
+    def generate_number(self, maxPower):
         if len(self.__free_cells) == 0:
             return
 
+        power = randint(1, maxPower)
         random_value = 2 if random() < 0.9 else 4
+        random_value = int(math.pow(random_value, power))
         x, y = choice(self.__free_cells)
         self.__cells[x][y] = random_value
 

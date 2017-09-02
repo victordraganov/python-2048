@@ -8,6 +8,14 @@ class State(Enum):
     running = 'running'
     game_over = 'game_over'
     game_won = 'game_won'
+    game_waiting = 'game_waiting'
+
+
+class Difficulty(Enum):
+    EASY = 1,"easy"
+    NORMAL = 2, "normal"
+    HARD = 3, "hard"
+    HELL = 4, "hell"
 
 
 class Game:
@@ -17,8 +25,9 @@ class Game:
         self.__score = 0
         self.__chart = Chart()
         self.__history = []
-        self.__state = State.running
+        self.__state = State.game_waiting
         self.__undo_counter = 0
+        self.__difficulty = Difficulty.NORMAL
 
     def slide_to(self, direction):
         if direction not in ['left', 'right', 'up', 'down']:
@@ -38,7 +47,7 @@ class Game:
             self.__history.append((grid_before_slide, points_gained))
             if len(self.__history) > constants.DEFAULT_HISTORY_LENGTH:
                 self.__history.pop(0)
-            self.__grid.generate_number()
+            self.__grid.generate_number(self.__difficulty.value[0])
             self.__score += points_gained
         else:
             if not self.__grid.can_slide():
@@ -55,8 +64,13 @@ class Game:
             self.__undo_counter += 1
 
     def start(self):
-        self.__grid.generate_number()
-        self.__grid.generate_number()
+        if(self.__state == State.game_waiting):
+            self.__grid.generate_number(int(self.__difficulty.value[0]))
+            self.__grid.generate_number(int(self.__difficulty.value[0]))
+            self.__state = State.running
+
+    def set_difficulty(self, selected):
+        self.__difficulty = selected
 
     def get_value_at(self, position):
         return self.__grid[position]
